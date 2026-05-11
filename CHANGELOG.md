@@ -1,3 +1,6 @@
+> Starting with release automation, new release changelogs are maintained
+> in the [CHANGELOG/](CHANGELOG/) directory with per-cycle files.
+
 # Changelog DeviceRoamingStatus
 ## Table of Contents
 - [r1.2](#r12)
