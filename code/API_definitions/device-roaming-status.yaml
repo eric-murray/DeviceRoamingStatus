@@ -233,12 +233,19 @@ components:
     CountryCode:
       description: The Mobile country code (MCC) as an geographic region identifier for the country and the dependent areas.
       type: integer
+      format: int32
+      minimum: 100
+      maximum: 999
 
     CountryName:
       description: The ISO 3166 ALPHA-2 country-codes of mapped to mobile country code(MCC). If there is mapping of one MCC to multiple countries, then we have list of countries. If there is no mapping of MCC to any country, then an empty array [] shall be returned..
       type: array
+      maxItems: 5
       items:
+        description: The ISO 3166 ALPHA-2 country-code
         type: string
+        maxLength: 2
+        pattern: ^[A-Z]{2}$
 
     RoamingStatusResponse:
       type: object
