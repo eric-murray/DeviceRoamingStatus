@@ -248,6 +248,7 @@ components:
         pattern: ^[A-Z]{2}$
 
     RoamingStatusResponse:
+      description: The response body providing details of the roaming status of the requested device
       type: object
       required:
         - lastStatusTime
@@ -265,7 +266,7 @@ components:
           $ref: "#/components/schemas/CountryName"
 
     RoamingStatusRequest:
-      description: The request for retrieving the current roaming status for the requested device.
+      description: The request body for retrieving the current roaming status for the requested device.
       type: object
       properties:
         device:
