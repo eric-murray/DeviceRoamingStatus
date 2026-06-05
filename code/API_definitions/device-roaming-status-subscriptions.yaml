@@ -415,7 +415,7 @@ components:
       description: Subscription identifier that was obtained from the create event subscription operation
       required: true
       schema:
-        $ref: "../common/CAMARA_common.yaml#/components/schemas/SubscriptionId"
+        $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionId"
 
   schemas:
     CreateSubscriptionDetail:
