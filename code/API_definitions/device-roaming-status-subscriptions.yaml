@@ -285,7 +285,7 @@ paths:
 
     get:
       tags:
-        - Device roaming status subscription
+        - Device Roaming Status Subscription
       summary: "Retrieve a list of device roaming status event subscription"
       description: Retrieve a list of device roaming status event subscription(s)
       operationId: retrieveDeviceRoamingStatusSubscriptionList
@@ -327,7 +327,7 @@ paths:
   /subscriptions/{subscriptionId}:
     get:
       tags:
-        - Device roaming status subscription
+        - Device Roaming Status Subscription
       summary: "Retrieve a roaming status event subscription for a device"
       description: retrieve device roaming status subscription information for a given subscription.
       operationId: retrieveDeviceRoamingStatusSubscription
@@ -367,7 +367,7 @@ paths:
 
     delete:
       tags:
-        - Device roaming status subscription
+        - Device Roaming Status Subscription
       summary: "Delete a device-roaming-status event subscription for a device"
       operationId: deleteDeviceRoamingStatusSubscription
       description: Delete a given device-roaming-status subscription by ID
@@ -415,7 +415,7 @@ components:
       description: Subscription identifier that was obtained from the create event subscription operation
       required: true
       schema:
-        $ref: "#/components/schemas/SubscriptionId"
+        $ref: "../common/CAMARA_common.yaml#/components/schemas/SubscriptionId"
 
   schemas:
     CreateSubscriptionDetail:
@@ -651,13 +651,20 @@ components:
     CountryCode:
       description: The Mobile country code (MCC) as an geographic region identifier for the country and the dependent areas.
       type: integer
+      format: int32
+      minimum: 100
+      maximum: 999
 
     CountryName:
       description: The ISO 3166 ALPHA-2 country-codes of mapped to mobile country code(MCC). If there is mapping of one MCC to multiple countries, then we have list of countries. If there is no mapping of MCC to any country, then an empty array [] shall be returned..
       type: array
+      maxItems: 5
       items:
+        description: The ISO 3166 ALPHA-2 country-code
         type: string
-    
+        maxLength: 2
+        pattern: ^[A-Z]{2}$
+
     EventRoamingStatus:
       description: event structure for roaming status change
       allOf:
@@ -799,6 +806,7 @@ components:
 
   examples:
     ROAMING_STATUS:
+      description: Example roaming status notification
       value:
         id: "123654"
         source: https://notificationSendServer12.supertelco.com
@@ -813,6 +821,7 @@ components:
         time: "2023-01-17T13:18:23.682Z"
 
     ROAMING_OFF:
+      description: Example roaming off notification
       value:
         id: "123655"
         source: https://notificationSendServer12.supertelco.com
@@ -826,6 +835,7 @@ components:
         time: "2023-01-18T13:18:23.682Z"
 
     ROAMING_ON:
+      description: Example roaming on notification
       value:
         id: "123656"
         source: https://notificationSendServer12.supertelco.com
@@ -839,6 +849,7 @@ components:
         time: "2023-01-19T13:18:23.682Z"
 
     ROAMING_CHANGE_COUNTRY:
+      description: Example roaming country change notification
       value:
         id: "123657"
         source: https://notificationSendServer12.supertelco.com
@@ -899,6 +910,7 @@ components:
         time: "2024-03-05T15:00:23.682Z"
 
     ACTIVE_SUBSCRIPTION:
+      description: Example of the details of an active subscription
       value:
         id: 550e8400-e29b-41d4-a716-446655440000
         sink: https://endpoint.example.com/sink
@@ -915,6 +927,7 @@ components:
         status: ACTIVE
 
     ACTIVE_SUBSCRIPTION_WITH_DEVICE_DISAMBIGUATION:
+      description: Example of the details of an active subscription including the device identifier
       value:
         id: 550e8400-e29b-41d4-a716-446655440000
         sink: https://endpoint.example.com/sink
@@ -933,6 +946,7 @@ components:
         status: ACTIVE
 
     SUBSCRIPTION_ACTIVATION_REQUESTED:
+      description: Example of the details of a subscription whose activation has been requested
       value:
         id: 550e8400-e29b-41d4-a716-446655440000
         sink: https://endpoint.example.com/sink
@@ -949,6 +963,7 @@ components:
         status: ACTIVATION_REQUESTED
 
     SUBSCRIPTION_DELETED:
+      description: Example of the details of a subscription which has been deleted
       value:
         id: 550e8400-e29b-41d4-a716-446655440000
         sink: https://endpoint.example.com/sink
@@ -965,6 +980,7 @@ components:
         status: DELETED
 
     CREATE_SUBSCRIPTION:
+      description: Example request body to create a subscription
       value:
         sink: "https://endpoint.example.com/sink"
         sinkCredential: {
