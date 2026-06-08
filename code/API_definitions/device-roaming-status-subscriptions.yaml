@@ -749,13 +749,12 @@ components:
         - type: object
           properties:
             data:
-              $ref: "#/components/schemas/SubscriptionStarted"
-
-    SubscriptionStarted:
-      description: Event detail structure for org.camaraproject.device-roaming-status-subscriptions.v0.subscription-started event
-      allOf:
-        - $ref: "#/components/schemas/BasicDeviceEventData"
-        - $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionStarted"
+              allOf:
+                - type: object
+                  properties:
+                    device:
+                      $ref: "../common/CAMARA_common.yaml#/components/schemas/DeviceResponse"
+                - $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionStarted"
 
     EventSubscriptionUpdated:
       description: event structure for event subscription updated
@@ -764,13 +763,12 @@ components:
         - type: object
           properties:
             data:
-              $ref: "#/components/schemas/SubscriptionUpdated"
-
-    SubscriptionUpdated:
-      description: Event detail structure for org.camaraproject.device-roaming-status-subscriptions.v0.subscription-updated event
-      allOf:
-        - $ref: "#/components/schemas/BasicDeviceEventData"
-        - $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionUpdated"
+              allOf:
+                - type: object
+                  properties:
+                    device:
+                      $ref: "../common/CAMARA_common.yaml#/components/schemas/DeviceResponse"
+                - $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionUpdated"
 
     EventSubscriptionEnded:
       description: event structure for event subscription ended
@@ -779,13 +777,11 @@ components:
         - type: object
           properties:
             data:
-              $ref: "#/components/schemas/SubscriptionEnded"
-
-    SubscriptionEnded:
-      description: Event detail structure for org.camaraproject.device-roaming-status-subscriptions.v0.subscription-ended event
-      allOf:
-        - $ref: "#/components/schemas/BasicDeviceEventData"
-        - $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionEnded"
+                - type: object
+                  properties:
+                    device:
+                      $ref: "../common/CAMARA_common.yaml#/components/schemas/DeviceResponse"
+                - $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionEnded"
 
     Sink:
       description: The address to which events shall be delivered using the selected protocol.
