@@ -749,7 +749,13 @@ components:
         - type: object
           properties:
             data:
-              $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionStarted"
+              $ref: "#/components/schemas/SubscriptionStarted"
+
+    SubscriptionStarted:
+      description: Event detail structure for org.camaraproject.device-roaming-status-subscriptions.v0.subscription-started event
+      allOf:
+        - $ref: "#/components/schemas/BasicDeviceEventData"
+        - $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionStarted"
 
     EventSubscriptionUpdated:
       description: event structure for event subscription updated
@@ -758,7 +764,13 @@ components:
         - type: object
           properties:
             data:
-              $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionUpdated"
+              $ref: "#/components/schemas/SubscriptionUpdated"
+
+    SubscriptionUpdated:
+      description: Event detail structure for org.camaraproject.device-roaming-status-subscriptions.v0.subscription-updated event
+      allOf:
+        - $ref: "#/components/schemas/BasicDeviceEventData"
+        - $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionUpdated"
 
     EventSubscriptionEnded:
       description: event structure for event subscription ended
@@ -772,9 +784,6 @@ components:
     SubscriptionEnded:
       description: Event detail structure for org.camaraproject.device-roaming-status-subscriptions.v0.subscription-ended event
       allOf:
-        - type: object
-          required:
-            - countryCode
         - $ref: "#/components/schemas/BasicDeviceEventData"
         - $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionEnded"
 
