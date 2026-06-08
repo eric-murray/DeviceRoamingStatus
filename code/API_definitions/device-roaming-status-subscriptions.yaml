@@ -777,6 +777,7 @@ components:
         - type: object
           properties:
             data:
+              allOf:
                 - type: object
                   properties:
                     device:
