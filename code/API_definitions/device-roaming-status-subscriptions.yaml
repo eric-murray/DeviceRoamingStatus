@@ -774,7 +774,7 @@ components:
       allOf:
         - type: object
           required:
-            - countryCode      
+            - countryCode
         - $ref: "#/components/schemas/BasicDeviceEventData"
         - $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionEnded"
 
