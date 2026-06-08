@@ -665,6 +665,17 @@ components:
         maxLength: 2
         pattern: ^[A-Z]{2}$
 
+    BasicDeviceEventData:
+      description: Event detail structure for basic device events
+      type: object
+      required:
+        - subscriptionId
+      properties:
+        device:
+          $ref: "../common/CAMARA_common.yaml#/components/schemas/DeviceResponse"
+        subscriptionId:
+          $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionId"
+
     EventRoamingStatus:
       description: event structure for roaming status change
       allOf:
@@ -673,6 +684,22 @@ components:
           properties:
             data:
               $ref: "#/components/schemas/RoamingStatus"
+
+    RoamingStatus:
+      description: Event detail structure for org.camaraproject.device-roaming-status-subscriptions.v0.roaming-status event
+      allOf:
+        - $ref: "#/components/schemas/BasicDeviceEventData"
+        - type: object
+          required:
+            - roaming
+          properties:
+            roaming:
+              type: boolean
+              description: Roaming status. True, if it is roaming.
+            countryCode:
+              $ref: "#/components/schemas/CountryCode"
+            countryName:
+              $ref: "#/components/schemas/CountryName"
 
     EventRoamingOn:
       description: event structure for roaming on change
@@ -701,6 +728,20 @@ components:
             data:
               $ref: "#/components/schemas/RoamingChangeCountry"
 
+    RoamingChangeCountry:
+      description: Event detail structure for org.camaraproject.device-roaming-status-subscriptions.v0.roaming-on event
+      allOf:
+        - $ref: "#/components/schemas/BasicDeviceEventData"
+        - type: object
+          required:
+            - countryCode
+            - countryName
+          properties:
+            countryCode:
+              $ref: "#/components/schemas/CountryCode"
+            countryName:
+              $ref: "#/components/schemas/CountryName"
+
     EventSubscriptionStarted:
       description: event structure for event subscription started
       allOf:
@@ -728,55 +769,14 @@ components:
             data:
               $ref: "#/components/schemas/SubscriptionEnded"
 
-    BasicDeviceEventData:
-      description: Event detail structure for basic device events
-      type: object
-      required:
-        - subscriptionId
-      properties:
-        device:
-          $ref: "../common/CAMARA_common.yaml#/components/schemas/DeviceResponse"
-        subscriptionId:
-          $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionId"
-
-    RoamingStatus:
-      description: Event detail structure for org.camaraproject.device-roaming-status-subscriptions.v0.roaming-status event
-      allOf:
-        - $ref: "#/components/schemas/BasicDeviceEventData"
-        - type: object
-          required:
-            - roaming
-          properties:
-            roaming:
-              type: boolean
-              description: Roaming status. True, if it is roaming.
-            countryCode:
-              $ref: "#/components/schemas/CountryCode"
-            countryName:
-              $ref: "#/components/schemas/CountryName"
-
-    RoamingChangeCountry:
-      description: Event detail structure for org.camaraproject.device-roaming-status-subscriptions.v0.roaming-on event
-      allOf:
-        - $ref: "#/components/schemas/BasicDeviceEventData"
-        - type: object
-          required:
-            - countryCode
-            - countryName
-          properties:
-            countryCode:
-              $ref: "#/components/schemas/CountryCode"
-            countryName:
-              $ref: "#/components/schemas/CountryName"
-
     SubscriptionEnded:
       description: Event detail structure for org.camaraproject.device-roaming-status-subscriptions.v0.subscription-ended event
       allOf:
-        - $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionEnded"
-        - $ref: "#/components/schemas/BasicDeviceEventData"
         - type: object
           required:
-            - countryCode
+            - countryCode      
+        - $ref: "#/components/schemas/BasicDeviceEventData"
+        - $ref: "../common/CAMARA_event_common.yaml#/components/schemas/SubscriptionEnded"
 
     Sink:
       description: The address to which events shall be delivered using the selected protocol.
