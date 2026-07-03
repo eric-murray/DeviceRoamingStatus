@@ -997,26 +997,21 @@ components:
       description: Example request body to create a subscription
       value:
         sink: "https://endpoint.example.com/sink"
-        sinkCredential: {
-          "credentialType": "ACCESSTOKEN",
-          "accessToken": "xxx",
-          "accessTokenExpiresUtc": "2024-02-17T16:23:45Z",
-          "accessTokenType": "bearer"
-        }
+        sinkCredential:
+          credentialType: "ACCESSTOKEN"
+          accessToken: "xxx"
+          accessTokenExpiresUtc: "2024-02-17T16:23:45Z"
+          accessTokenType: "bearer"
         protocol: HTTP
-        types: [
-          "org.camaraproject.device-roaming-status-subscriptions.v0.roaming-status"
-        ]
-        config: {
-          "subscriptionDetail": {
-            "device": {
-              "phoneNumber": "+123456789",
-            }
-          },
-          "subscriptionExpireTime": "2023-01-17T13:18:23.682Z",
-          "subscriptionMaxEvents": 5,
-          "initialEvent": true
-        }
+        types:
+          - "org.camaraproject.device-roaming-status-subscriptions.v0.roaming-status"
+        config:
+          subscriptionDetail:
+            device:
+              phoneNumber: "+123456789"
+          subscriptionExpireTime: "2023-01-17T13:18:23.682Z"
+          subscriptionMaxEvents: 5
+          initialEvent: true
 
     SUBSCRIPTION_LIST:
       description: A list of API consumer subscriptions. If a 3-legged access token is used, the list is specific to the device associated with that token.
