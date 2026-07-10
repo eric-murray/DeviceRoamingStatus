@@ -205,6 +205,7 @@ paths:
                     countryCode: 340
                     countryName: ["BL", "GF", "GP", "MF", "MQ"]
                 Last Status Update Time Unknown:
+                  description: The API provider has recorded that the device is currently roaming, but has no information as to when that status was last confirmed to be correct. The API consumer must take this uncertainty into account when deciding on the value of the information to them.
                   value:
                     lastStatusTime: null
                     roaming: true
