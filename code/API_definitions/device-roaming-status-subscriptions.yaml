@@ -24,16 +24,16 @@ info:
 
     ## Device roaming status subscription
 
-    These endpoints allow to manage event subscription on roaming device status event.
+    These endpoints allow the API consumer to manage event subscriptions for device roaming status events.
     The CAMARA subscription model is detailed in the `CAMARA API Event Subscription and Notification Guide` and uses notifications that follow the CloudEvents specification.
 
-    When subscribing, it is mandatory to provide the event `type` you are subscribing to, as multiple subscription-types are managed by this API.
+    When creating a subscription, it is mandatory to provide the event type you are subscribing to, as multiple subscription-types are managed by this API.
 
     Following event types are defined for this API:
-      - `org.camaraproject.device-roaming-status-subscriptions.v0.roaming-status`         - Event triggered when the device roaming status changes (either starting or stopping roaming)
-      - `org.camaraproject.device-roaming-status-subscriptions.v0.roaming-on`             - Event triggered when the device roaming status changes to roaming ON
-      - `org.camaraproject.device-roaming-status-subscriptions.v0.roaming-off`            - Event triggered when the device roaming status changes to roaming OFF
-      - `org.camaraproject.device-roaming-status-subscriptions.v0.roaming-change-country` - Event triggered whenever the device remains roaming but there is a change in country name
+      - `org.camaraproject.device-roaming-status-subscriptions.v0.roaming-status`         : Event triggered when the device roaming status changes (either starting or stopping roaming)
+      - `org.camaraproject.device-roaming-status-subscriptions.v0.roaming-on`             : Event triggered when the device roaming status changes to roaming ON
+      - `org.camaraproject.device-roaming-status-subscriptions.v0.roaming-off`            : Event triggered when the device roaming status changes to roaming OFF
+      - `org.camaraproject.device-roaming-status-subscriptions.v0.roaming-change-country` : Event triggered whenever the device remains roaming but there is a change in country name
 
     Note: Additionally, the following events could be sent, which do not require a dedicated subscription:
       - `org.camaraproject.device-roaming-status-subscriptions.v0.subscription-started` is sent when the subscription starts.
