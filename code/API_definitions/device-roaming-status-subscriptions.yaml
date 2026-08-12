@@ -27,7 +27,7 @@ info:
 
     The API exposes following capability:
 
-    ## Device roaming status subscription
+    ## Device Roaming Status Subscription
 
     These endpoints allow the API consumer to manage event subscriptions for device roaming status events.
     The CAMARA subscription model is detailed in the `CAMARA API Event Subscription and Notification Guide` and uses notifications that follow the CloudEvents specification.
