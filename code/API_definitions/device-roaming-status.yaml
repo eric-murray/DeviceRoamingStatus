@@ -39,9 +39,9 @@ info:
 
     The API exposes following capabilities:
 
-    ## Device roaming situation
+    ## Device Roaming Status
 
-    The endpoint `POST /retrieve` allows the API consumer to synchronously get roaming status and country information (when the device is roaming)
+    The endpoint `POST /retrieve` allows the API consumer to synchronously get roaming status and country information (when roaming) for a specific device 
 
     <!-- CAMARA:MANDATORY:authorization-and-authentication:BEGIN -->
 
