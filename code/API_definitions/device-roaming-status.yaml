@@ -32,7 +32,7 @@ info:
     * **Country**:\
       The mobile country code and associated ISO country name. The visited country information is provided when the device is roaming. When the device is not roaming, the country will be that of the home network for the device, but this information is not provided by the API.
 
-    * **LastStatusTime**:\
+    * **Last Status Time**:\
       The time when the roaming status was last confirmed to be correct by the API provider. An older status is more likely to now be incorrect. The API provider may be unable to confirm a more recent status because, for example, the device may no longer be connected to the mobile network.
 
     # API Functionality
