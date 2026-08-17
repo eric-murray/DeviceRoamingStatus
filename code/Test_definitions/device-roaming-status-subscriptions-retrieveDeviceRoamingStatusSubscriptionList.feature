@@ -22,7 +22,7 @@ Feature: Device Roaming Status Subscriptions API, vwip - Operation retrieveDevic
 # Happy path scenarios
 ##########################
 
-  @roaming_status_subscriptions_01_Operation_to_retrieve_list_of_subscriptions_2legs
+  @roaming_status_subscriptions_01_operation_to_retrieve_list_of_subscriptions_2legs
   Scenario: Get a list of subscriptions for a 2-legged access token
     Given an API consumer that has created at least one roaming status subscription
     And the header "Authorization" is set to a valid access token which does not identify any device
@@ -36,7 +36,7 @@ Feature: Device Roaming Status Subscriptions API, vwip - Operation retrieveDevic
     And the response body array "$.subscriptions" does not include any subscriptions created by a different API consumer
     And the response body property "$.pagination" complies with the OAS schema at "#/components/schemas/Pagination"
 
-  @roaming_status_subscriptions_02_Operation_to_retrieve_list_of_subscriptions_3legs
+  @roaming_status_subscriptions_02_operation_to_retrieve_list_of_subscriptions_3legs
   Scenario: Get a list of subscriptions for a 3-legged access token
     Given an API consumer that has created at least one roaming status subscription for a given device
     And the header "Authorization" is set to a valid access token which identifies that device
@@ -52,7 +52,7 @@ Feature: Device Roaming Status Subscriptions API, vwip - Operation retrieveDevic
     And the response property "$.subscriptions[*].config.subscriptionDetail.device" is not present for any of the subscription records
     And the response body property "$.pagination" complies with the OAS schema at "#/components/schemas/Pagination"
 
-  @roaming_status_subscriptions_03_Operation_to_retrieve_list_of_subscriptions_when_no_records
+  @roaming_status_subscriptions_03_operation_to_retrieve_list_of_subscriptions_when_no_records
   Scenario: Get a list of roaming status subscriptions when no subscriptions are available
     Given an API consumer that has created no roaming status subscriptions
     When the request "retrieveDeviceRoamingStatusSubscriptionList" is sent
