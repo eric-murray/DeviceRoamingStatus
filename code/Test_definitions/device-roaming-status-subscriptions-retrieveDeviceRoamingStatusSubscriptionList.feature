@@ -39,7 +39,7 @@ Feature: Device Roaming Status Subscriptions API, vwip - Operation retrieveDevic
   @roaming_status_subscriptions_02_Operation_to_retrieve_list_of_subscriptions_3legs
   Scenario: Get a list of subscriptions for a 3-legged access token
     Given an API consumer that has created at least one roaming status subscription for a given device
-    And the header "Authorization" is set to a valid access token which does not identifies that device
+    And the header "Authorization" is set to a valid access token which identifies that device
     When the request "retrieveDeviceRoamingStatusSubscriptionList" is sent
     Then the response code is 200
     And the response header "Content-Type" is "application/json"
