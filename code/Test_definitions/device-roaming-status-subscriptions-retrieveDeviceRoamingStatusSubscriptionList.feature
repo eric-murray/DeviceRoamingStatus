@@ -49,7 +49,7 @@ Feature: Device Roaming Status Subscriptions API, vwip - Operation retrieveDevic
     And the response body array "$.subscriptions" includes all subscriptions created by the API consumer for the identified device
     And the response body array "$.subscriptions" does not include any subscriptions created by the API consumer for a different device
     And the response body array "$.subscriptions" does not include any subscriptions created by a different API consumer
-    And the response property "$.subscriptions[*].config.subscriptionDetail.device" is not present for any of the subscription records
+    And the response body property "$.subscriptions[*].config.subscriptionDetail.device" is not present for any of the subscription records
     And the response body property "$.pagination" complies with the OAS schema at "#/components/schemas/Pagination"
 
   @roaming_status_subscriptions_03_operation_to_retrieve_list_of_subscriptions_when_no_records
@@ -72,7 +72,7 @@ Feature: Device Roaming Status Subscriptions API, vwip - Operation retrieveDevic
     And the response header "x-correlator" has the same value as the request header "x-correlator"
     And the response header "Link" contains a link to the next page with rel="next"
     And the response body complies with the OAS schema at "#/components/schemas/SubscriptionList"
-    And the response body property "$.subscriptions" has 20 items and each item complies with the OAS schema at "#/components/schemas/Subscription"
+    And the response body array "$.subscriptions" has 20 items and each item complies with the OAS schema at "#/components/schemas/Subscription"
     And the response body property "$.pagination" complies with the OAS schema at "#/components/schemas/Pagination"
     And the response body property "$.pagination.page" is 1
     And the response body property "$.pagination.perPage" is 20
@@ -88,7 +88,7 @@ Feature: Device Roaming Status Subscriptions API, vwip - Operation retrieveDevic
     And the response header "X-Total-Pages" is equal to the value of the response body property "$.pagination.totalPages"
     And the response header "X-Total-Count" is equal to the value of the response body property "$.pagination.totalCount"
     And the response body complies with the OAS schema at "#/components/schemas/SubscriptionList"
-    And the response body property "$.subscriptions" has 20 items and each item complies with the OAS schema at "#/components/schemas/Subscription"
+    And the response body array "$.subscriptions" has 20 items and each item complies with the OAS schema at "#/components/schemas/Subscription"
     And the response body property "$.pagination" complies with the OAS schema at "#/components/schemas/Pagination"
     And the response body property "$.pagination.page" is 1
     And the response body property "$.pagination.perPage" is 20
@@ -106,7 +106,7 @@ Feature: Device Roaming Status Subscriptions API, vwip - Operation retrieveDevic
     And the response header "X-Total-Pages" is equal to the value of the response body property "$.pagination.totalPages"
     And the response header "X-Total-Count" is equal to the value of the response body property "$.pagination.totalCount"
     And the response body complies with the OAS schema at "#/components/schemas/SubscriptionList"
-    And the response body property "$.subscriptions" has 20 items and each item complies with the OAS schema at "#/components/schemas/Subscription"
+    And the response body array "$.subscriptions" has 20 items and each item complies with the OAS schema at "#/components/schemas/Subscription"
     And the response body property "$.pagination" complies with the OAS schema at "#/components/schemas/Pagination"
     And the response body property "$.pagination.page" is 2
     And the response body property "$.pagination.perPage" is 20
@@ -124,7 +124,7 @@ Feature: Device Roaming Status Subscriptions API, vwip - Operation retrieveDevic
     And the response header "X-Total-Pages" is equal to the value of the response body property "$.pagination.totalPages"
     And the response header "X-Total-Count" is equal to the value of the response body property "$.pagination.totalCount"
     And the response body complies with the OAS schema at "#/components/schemas/SubscriptionList"
-    And the response body property "$.subscriptions" has between 1 and 20 items and each item complies with the OAS schema at "#/components/schemas/Subscription"
+    And the response body array "$.subscriptions" has between 1 and 20 items and each item complies with the OAS schema at "#/components/schemas/Subscription"
     And the response body property "$.pagination" complies with the OAS schema at "#/components/schemas/Pagination"
     And the response body property "$.pagination.page" is 3
     And the response body property "$.pagination.perPage" is 20
