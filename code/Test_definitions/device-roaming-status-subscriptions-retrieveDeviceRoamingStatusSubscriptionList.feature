@@ -22,46 +22,138 @@ Feature: Device Roaming Status Subscriptions API, vwip - Operation retrieveDevic
 # Happy path scenarios
 ##########################
 
-  @roaming_status_subscriptions_01_retrieve_list_2legs
-  Scenario: Check existing subscription(s) is/are retrieved in list with a 2-legged access token
-    Given at least one subscription is existing for the API consumer making this request
+  @roaming_status_subscriptions_01_operation_to_retrieve_list_of_subscriptions_2legs
+  Scenario: Get a list of subscriptions for a 2-legged access token
+    Given an API consumer that has created at least one roaming status subscription
     And the header "Authorization" is set to a valid access token which does not identify any device
     When the request "retrieveDeviceRoamingStatusSubscriptionList" is sent
-    Then the response status code is 200
+    Then the response code is 200
     And the response header "Content-Type" is "application/json"
-    And the response header "x-correlator" has same value as the request header "x-correlator"
-    And the response body complies with an array of OAS schema defined at "#/components/schemas/Subscription"
-    And the response body lists all subscriptions belonging to the API consumer
+    And the response header "x-correlator" has the same value as the request header "x-correlator"
+    And the response body complies with the OAS schema at "#/components/schemas/SubscriptionList"
+    And each item in the response body array "$.subscriptions" complies with the OAS schema at "#/components/schemas/Subscription"
+    And the response body array "$.subscriptions" includes all subscriptions created by the API consumer
+    And the response body array "$.subscriptions" does not include any subscriptions created by a different API consumer
+    And the response body property "$.pagination" complies with the OAS schema at "#/components/schemas/Pagination"
 
-  @roaming_status_subscriptions_02_retrieve_list_3legs
-  Scenario: Check existing subscription(s) is/are retrieved in list with a 3-legged access token
-    Given the API consumer has at least one active subscription for the device
-    And the header "Authorization" is set to a valid access token which identifies a valid device associated with one or more subscriptions
+  @roaming_status_subscriptions_02_operation_to_retrieve_list_of_subscriptions_3legs
+  Scenario: Get a list of subscriptions for a 3-legged access token
+    Given an API consumer that has created at least one roaming status subscription for a given device
+    And the header "Authorization" is set to a valid access token which identifies that device
     When the request "retrieveDeviceRoamingStatusSubscriptionList" is sent
-    Then the response status code is 200
+    Then the response code is 200
     And the response header "Content-Type" is "application/json"
-    And the response header "x-correlator" has same value as the request header "x-correlator"
-    And the response body complies with an array of OAS schema defined at "#/components/schemas/Subscription"
-    And the response body lists all subscriptions belonging to the API consumer for the identified device
-    And the response property "$.config.subscriptionDetail.device" is not present in any of the subscription records
+    And the response header "x-correlator" has the same value as the request header "x-correlator"
+    And the response body complies with the OAS schema at "#/components/schemas/SubscriptionList"
+    And each item in the response body array "$.subscriptions" complies with the OAS schema at "#/components/schemas/Subscription"
+    And the response body array "$.subscriptions" includes all subscriptions created by the API consumer for the identified device
+    And the response body array "$.subscriptions" does not include any subscriptions created by the API consumer for a different device
+    And the response body array "$.subscriptions" does not include any subscriptions created by a different API consumer
+    And the response body property "$.subscriptions[*].config.subscriptionDetail.device" is not present for any of the subscription records
+    And the response body property "$.pagination" complies with the OAS schema at "#/components/schemas/Pagination"
 
-  @roaming_status_subscriptions_03_retrieve_empty_list_3legs
-  Scenario: Check no existing subscription is retrieved in list
-    Given the API consumer has no active subscriptions for the device
-    And the header "Authorization" is set to a valid access token which identifies a valid device
+  @roaming_status_subscriptions_03_operation_to_retrieve_list_of_subscriptions_when_no_records
+  Scenario: Get a list of roaming status subscriptions when no subscriptions are available
+    Given an API consumer that has created no roaming status subscriptions
     When the request "retrieveDeviceRoamingStatusSubscriptionList" is sent
-    Then the response status code is 200
+    Then the response code is 200
     And the response header "Content-Type" is "application/json"
-    And the response header "x-correlator" has same value as the request header "x-correlator"
-    And the response body is an empty array
+    And the response header "x-correlator" has the same value as the request header "x-correlator"
+    And the response body complies with the OAS schema at "#/components/schemas/SubscriptionList"
+    And the response body array "$.subscriptions" is an empty array
+    And the response body property "$.pagination" complies with the OAS schema at "#/components/schemas/Pagination"
 
-################
-# Error scenarios for management of input parameter device
-##################
+  @roaming_status_subscriptions_04_pagination_default_values
+  Scenario: Subscription list pagination with default values for page and perPage
+    Given an API consumer who has created more than 20 roaming status subscriptions
+    When the request "retrieveDeviceRoamingStatusSubscriptionList" is sent without setting query parameters "page" and "perPage"
+    Then the response code is 200
+    And the response header "Content-Type" is "application/json"
+    And the response header "x-correlator" has the same value as the request header "x-correlator"
+    And the response header "Link" contains a link to the next page with rel="next"
+    And the response body complies with the OAS schema at "#/components/schemas/SubscriptionList"
+    And the response body array "$.subscriptions" has 20 items and each item complies with the OAS schema at "#/components/schemas/Subscription"
+    And the response body property "$.pagination" complies with the OAS schema at "#/components/schemas/Pagination"
+    And the response body property "$.pagination.page" is 1
+    And the response body property "$.pagination.perPage" is 20
+
+  @roaming_status_subscriptions_05_pagination_custom_values
+  Scenario: Subscription list pagination with custom values for page and perPage
+    Given an API consumer who has created more than 40 roaming status subscriptions
+    When the request "retrieveDeviceRoamingStatusSubscriptionList" is sent with query parameters "page" set to 1 and "perPage" set to 20
+    Then the response code is 200
+    And the response header "Content-Type" is "application/json"
+    And the response header "x-correlator" has the same value as the request header "x-correlator"
+    And the response header "Link" contains a link to the next page with rel="next"
+    And the response header "X-Total-Pages" is equal to the value of the response body property "$.pagination.totalPages"
+    And the response header "X-Total-Count" is equal to the value of the response body property "$.pagination.totalCount"
+    And the response body complies with the OAS schema at "#/components/schemas/SubscriptionList"
+    And the response body array "$.subscriptions" has 20 items and each item complies with the OAS schema at "#/components/schemas/Subscription"
+    And the response body property "$.pagination" complies with the OAS schema at "#/components/schemas/Pagination"
+    And the response body property "$.pagination.page" is 1
+    And the response body property "$.pagination.perPage" is 20
+    And the response body property "$.pagination.totalPages", if present, is greater than 2
+    And the response body property "$.pagination.totalCount", if present, is greater than 40
+
+  @roaming_status_subscriptions_06_pagination_middle_page
+  Scenario: Subscription list pagination fetching a middle page of the list
+    Given an API consumer who has created more than 40 roaming status subscriptions
+    When the request "retrieveDeviceRoamingStatusSubscriptionList" is sent with query parameters "page" set to 2 and "perPage" set to 20
+    Then the response code is 200
+    And the response header "Content-Type" is "application/json"
+    And the response header "x-correlator" has the same value as the request header "x-correlator"
+    And the response header "Link" contains a link to the previous page with rel="prev" and a link to the next page with rel="next"
+    And the response header "X-Total-Pages" is equal to the value of the response body property "$.pagination.totalPages"
+    And the response header "X-Total-Count" is equal to the value of the response body property "$.pagination.totalCount"
+    And the response body complies with the OAS schema at "#/components/schemas/SubscriptionList"
+    And the response body array "$.subscriptions" has 20 items and each item complies with the OAS schema at "#/components/schemas/Subscription"
+    And the response body property "$.pagination" complies with the OAS schema at "#/components/schemas/Pagination"
+    And the response body property "$.pagination.page" is 2
+    And the response body property "$.pagination.perPage" is 20
+    And the response body property "$.pagination.totalPages", if present, is greater than 2
+    And the response body property "$.pagination.totalCount", if present, is greater than 40
+
+  @roaming_status_subscriptions_07_pagination_last_page
+  Scenario: Subscription list pagination fetching the last page of the list
+    Given an API consumer who has created more than 40 and less than 60 roaming status subscriptions
+    When the request "retrieveDeviceRoamingStatusSubscriptionList" is sent with query parameters "page" set to 3 and "perPage" set to 20
+    Then the response code is 200
+    And the response header "Content-Type" is "application/json"
+    And the response header "x-correlator" has the same value as the request header "x-correlator"
+    And the response header "Link" contains a link to the previous page with rel="prev"
+    And the response header "X-Total-Pages" is equal to the value of the response body property "$.pagination.totalPages"
+    And the response header "X-Total-Count" is equal to the value of the response body property "$.pagination.totalCount"
+    And the response body complies with the OAS schema at "#/components/schemas/SubscriptionList"
+    And the response body array "$.subscriptions" has between 1 and 20 items and each item complies with the OAS schema at "#/components/schemas/Subscription"
+    And the response body property "$.pagination" complies with the OAS schema at "#/components/schemas/Pagination"
+    And the response body property "$.pagination.page" is 3
+    And the response body property "$.pagination.perPage" is 20
+    And the response body property "$.pagination.totalPages", if present, is 3
+    And the response body property "$.pagination.totalCount", if present, is greater than 40 and less than 60
 
 ##################
 # Error code 400
 ##################
+
+  @roaming_status_subscriptions_retrieve_list_400.01_pagination_invalid_page_parameter
+  Scenario: Subscription list pagination with invalid value for page parameter
+    Given an API consumer who has created more than 20 roaming status subscriptions
+    When the request "retrieveDeviceRoamingStatusSubscriptionList" is sent with query parameter "page" set to any value less than 1 and "perPage" set to 20
+    Then the response status code is 400
+    And the response header "Content-Type" is "application/json"
+    And the response property "$.status" is 400
+    And the response property "$.code" is "INVALID_ARGUMENT"
+    And the response property "$.message" contains a user friendly text
+
+  @roaming_status_subscriptions_retrieve_list_400.02_pagination_invalid_perPage_parameter
+  Scenario: Subscription list pagination with invalid value for perPage parameter
+    Given an API consumer who has created more than 20 roaming status subscriptions
+    When the request "retrieveDeviceRoamingStatusSubscriptionList" is sent with query parameter "page" set to 1 and "perPage" set to any value outside the range [1-100]
+    Then the response status code is 400
+    And the response header "Content-Type" is "application/json"
+    And the response property "$.status" is 400
+    And the response property "$.code" is "INVALID_ARGUMENT"
+    And the response property "$.message" contains a user friendly text
 
 ##################
 # Error code 401
