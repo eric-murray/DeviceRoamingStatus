@@ -173,6 +173,63 @@ Feature: Device Roaming Status Subscriptions API, vwip - Operation createDeviceR
     And the notification property "$.data.subscriptionId" is equal to "id"
     And the notification request property "$.data.terminationReason" is equal to "MAX_EVENTS_REACHED"
 
+  @roaming_status_subscriptions_09_subscription_creation_initial_event
+  Scenario: Receive initial event notification on creation
+    Given the API supports initial events to be sent
+    And a valid subscription request body with property "$.config.initialEvent" set to true
+    When the request "createDeviceRoamingStatusSubscription" is sent
+    Then the response code is 201 or 202
+    And an event notification of the subscribed type is received on callback-url
+    And notification body complies with the OAS schema at "#/components/schemas/CloudEvent"
+
+  @roaming_status_subscriptions_10_Create_roaming_status_subscription_sync_with_accesstoken_sink_credential
+  Scenario: Create roaming status subscription (sync creation) with ACCESSTOKEN sinkCredential
+  # Some implementations may only support asynchronous subscription creation
+  # Some implementations may decide to not return the sinkCredential in the response (data minimization principle)
+    Given that subscriptions are created synchronously
+    And a valid subscription request body
+    And the request property "$.sinkCredential.credentialType" is set to "ACCESSTOKEN"
+    And the request property "$.sinkCredential.accessTokenType" is set to "bearer"
+    And the request property "$.sinkCredential.accessToken" is set to a valid access token
+    And the request property "$.sinkCredential.accessTokenExpiresUtc" is set to a valid expiry date in the future
+    When the request "createDeviceRoamingStatusSubscription" is sent
+    Then the response code is 201
+    And the response header "Content-Type" is "application/json"
+    And the response header "x-correlator" has the same value as the request header "x-correlator"
+    And the response body complies with the OAS schema at "#/components/schemas/Subscription"
+    And the response body property "$.sinkCredential.credentialType", if present, is set to value "ACCESSTOKEN"
+    And the response body property "$.sinkCredential.accessTokenExpiresUtc", if present, is set to the same value of the request property "$.sinkCredential.accessTokenExpiresUtc"
+
+  @roaming_status_subscriptions_11_Create_roaming_status_subscription_sync_with_private_jwt_key_sink_credential_out_of_band_provisioning
+  Scenario: Create roaming status subscription (sync creation) with PRIVATE_JWT_KEY sinkCredential, out-of-band provisioning
+  # Some implementations may only support asynchronous subscription creation
+  # Some implementations may only support out_of_band provisioning
+    Given that subscriptions are created synchronously
+    And a valid subscription request body
+    And the request property "$.sinkCredential.credentialType" is set to "PRIVATE_JWT_KEY"
+    When the request "createDeviceRoamingStatusSubscription" is sent
+    Then the response code is 201
+    And the response header "Content-Type" is "application/json"
+    And the response header "x-correlator" has the same value as the request header "x-correlator"
+    And the response body complies with the OAS schema at "#/components/schemas/Subscription"
+
+  @roaming_status_subscriptions_12_Create_roaming_status_subscription_sync_with_private_jwt_key_sink_credential_in_band_provisioning
+  Scenario: Create roaming status subscription (sync creation) with PRIVATE_JWT_KEY sinkCredential, in-band provisioning
+  # Some implementations may only support asynchronous subscription creation
+  # Some implementations may additionally support in_band provisioning
+    Given that subscriptions are created synchronously
+    And a valid subscription request body
+    And the request property "$.sinkCredential.credentialType" is set to "PRIVATE_JWT_KEY"
+    And the request property "$.sinkCredential.clientId" is set to a valid value
+    And the request property "$.sinkCredential.tokenUri" is set to a valid value
+    When the request "createDeviceRoamingStatusSubscription" is sent
+    Then the response code is 201
+    And the response header "Content-Type" is "application/json"
+    And the response header "x-correlator" has the same value as the request header "x-correlator"
+    And the response body complies with the OAS schema at "#/components/schemas/Subscription"
+    And the response body property "$.sinkCredential.credentialType" is set to value "PRIVATE_JWT_KEY"
+    And the response body property "$.sinkCredential.jwksUri" is set to a valid value
+
 ################
 # Error scenarios for management of input parameter device
 ##################
@@ -199,10 +256,10 @@ Feature: Device Roaming Status Subscriptions API, vwip - Operation createDeviceR
 
     Examples:
       | device_identifier          | oas_spec_schema                             |
-      | $.device.phoneNumber       | /components/schemas/PhoneNumber             |
-      | $.device.ipv4Address       | /components/schemas/DeviceIpv4Addr          |
-      | $.device.ipv6Address       | /components/schemas/DeviceIpv6Address       |
-      | $.device.networkIdentifier | /components/schemas/NetworkAccessIdentifier |
+      | $.device.phoneNumber       | #/components/schemas/PhoneNumber             |
+      | $.device.ipv4Address       | #/components/schemas/DeviceIpv4Addr          |
+      | $.device.ipv6Address       | #/components/schemas/DeviceIpv6Address       |
+      | $.device.networkIdentifier | #/components/schemas/NetworkAccessIdentifier |
 
   # This scenario may happen e.g. with 2-legged access tokens, which do not identify a single device.
   @roaming_status_subscriptions_C01.03_device_not_found
@@ -445,4 +502,15 @@ Feature: Device Roaming Status Subscriptions API, vwip - Operation createDeviceR
     Then the response status code is 422
     And the response property "$.status" is 422
     And the response property "$.code" is "MULTIEVENT_SUBSCRIPTION_NOT_SUPPORTED"
+    And the response property "$.message" contains a user friendly text
+
+  @roaming_status_subscriptions_422.02_creation_with_private_jwt_key_not_configured
+  Scenario: Private JWT Key not configured for subscription creation
+    Given the API provider requires the use of a Private JWT key mechanism for subscription creation authentication
+    And the Private JWT key mechanism is not pre-configured in the environment
+    And a valid subscription request body with the property "$.sinkCredential.credentialType" set to "PRIVATE_KEY_JWT"
+    When the request "createDeviceRoamingStatusSubscription" is sent
+    Then the response code is 422
+    And the response property "$.status" is 422
+    And the response property "$.code" is "PRIVATE_KEY_JWT_NOT_CONFIGURED"
     And the response property "$.message" contains a user friendly text
