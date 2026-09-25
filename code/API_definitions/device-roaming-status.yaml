@@ -20,7 +20,7 @@ info:
     ## Relevant terms and definitions
 
     * **Roaming**:\
-      For the purposes of this API, a device is considered to be roaming if it is connected to a mobile network with a different mobile country code (MCC) to its home network. A device is not considered to be roaming if it is connected to a mobile network that has the same MCC as the home network, even if that network is not the home network. Where the home network has a MCC for a country that has been allocated more than one MCC, a device is not considered to be roaming if it is connected to any network that uses a MCC for that country.
+      For the purposes of this API, a device is considered to be roaming if it is connected to a mobile network with a different mobile country code (MCC) to its home network. A device is not considered to be roaming if it is connected to a mobile network that has the same MCC as the home network, even if that network is not the home network. Where a country has been allocated more than one MCC, a device is not considered to be roaming if it is connected to any network that uses a MCC allocated for that country, even if that MCC is different to that of the home network.
 
     * **Device**:\
       A device refers to any physical entity that can connect to a network and participate in network communication.
