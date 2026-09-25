@@ -213,7 +213,7 @@ paths:
         "404":
           $ref: "../common/CAMARA_common.yaml#/components/responses/IdentifierNotFound404"
         "422":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/DeviceIdentifier422‎"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/DeviceIdentifier422"
         "429":
           $ref: "#/components/responses/TooManyRequestsOrQuotaExceeded429"
         "503":
