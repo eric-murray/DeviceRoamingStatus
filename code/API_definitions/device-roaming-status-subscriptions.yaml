@@ -239,15 +239,15 @@ paths:
                     x-correlator:
                       $ref: "../common/CAMARA_common.yaml#/components/headers/x-correlator"
                 "400":
-                  $ref: "../common/CAMARA_common.yaml#/components/responses/BadRequest400‎"
+                  $ref: "../common/CAMARA_common.yaml#/components/responses/BadRequest400"
                 "401":
-                  $ref: "../common/CAMARA_common.yaml#/components/responses/Unauthenticated401‎"
+                  $ref: "../common/CAMARA_common.yaml#/components/responses/Unauthenticated401"
                 "403":
-                  $ref: "../common/CAMARA_common.yaml#/components/responses/PermissionDenied403‎"
+                  $ref: "../common/CAMARA_common.yaml#/components/responses/PermissionDenied403"
                 "410":
-                  $ref: "../common/CAMARA_event_common.yaml#/components/responses/SinkGone410‎"
+                  $ref: "../common/CAMARA_event_common.yaml#/components/responses/SinkGone410"
                 "429":
-                  $ref: "#/components/responses/TooManyRequestsOrQuotaExceeded429‎"
+                  $ref: "#/components/responses/TooManyRequestsOrQuotaExceeded429"
               security:
                 - {}
                 - notificationsBearerAuth: []
@@ -279,11 +279,11 @@ paths:
         "400":
           $ref: "../common/CAMARA_event_common.yaml#/components/responses/CreateSubscriptionBadRequest400"
         "401":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Unauthenticated401‎"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/Unauthenticated401"
         "403":
           $ref: "../common/CAMARA_event_common.yaml#/components/responses/SubscriptionPermissionDenied403"
         "409":
-          $ref: "../common/CAMARA_event_common.yaml#/components/responses/CreateSubscriptionConflict409‎"
+          $ref: "../common/CAMARA_event_common.yaml#/components/responses/CreateSubscriptionConflict409"
         "422":
           $ref: "../common/CAMARA_event_common.yaml#/components/responses/CreateSubscriptionUnprocessableEntity422"
         "429":
@@ -324,11 +324,11 @@ paths:
                 empty-list-of-subscriptions:
                   $ref: "#/components/examples/EMPTY_SUBSCRIPTION_LIST"
         "400":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/BadRequest400‎"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/BadRequest400"
         "401":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/Unauthenticated401‎"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/Unauthenticated401"
         "403":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/PermissionDenied403‎"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/PermissionDenied403"
 
   /subscriptions/{subscriptionId}:
     get:
@@ -369,7 +369,7 @@ paths:
         "403":
           $ref: "../common/CAMARA_common.yaml#/components/responses/PermissionDenied403"
         "404":
-          $ref: "../common/CAMARA_common.yaml#/components/responses/NotFound404‎"
+          $ref: "../common/CAMARA_common.yaml#/components/responses/NotFound404"
 
     delete:
       tags:
@@ -446,8 +446,8 @@ components:
           examples:
             GENERIC_429_TOO_MANY_REQUESTS:
               $ref: "../common/CAMARA_common.yaml#/components/examples/GENERIC_429_TOO_MANY_REQUESTS"
-            GENERIC_429_QUOTA_EXCEEDED‎:
-              $ref: "../common/CAMARA_common.yaml#/components/examples/GENERIC_429_QUOTA_EXCEEDED‎"
+            GENERIC_429_QUOTA_EXCEEDED:
+              $ref: "../common/CAMARA_common.yaml#/components/examples/GENERIC_429_QUOTA_EXCEEDED"
 
   schemas:
     CreateSubscriptionDetail:
