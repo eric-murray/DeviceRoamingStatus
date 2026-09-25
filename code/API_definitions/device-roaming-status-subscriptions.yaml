@@ -425,7 +425,7 @@ components:
 
   responses:
     TooManyRequestsOrQuotaExceeded429:
-      description: Too Many Requests
+      description: Too Many Requests or Quota Exceeded
       headers:
         x-correlator:
           $ref: "../common/CAMARA_common.yaml#/components/headers/x-correlator"
