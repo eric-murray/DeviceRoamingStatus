@@ -215,7 +215,7 @@ paths:
         "422":
           $ref: "../common/CAMARA_common.yaml#/components/responses/DeviceIdentifier422‎"
         "429":
-          $ref: "#/components/responses/TooManyRequests429"
+          $ref: "#/components/responses/TooManyRequestsOrQuotaExceeded429"
         "503":
           $ref: "#/components/responses/ServiceUnavailable503"
 
@@ -225,8 +225,8 @@ components:
       $ref: "../common/CAMARA_common.yaml#/components/securitySchemes/openId"
 
   responses:
-    TooManyRequests429:
-      description: Too Many Requests
+    TooManyRequestsOrQuotaExceeded429:
+      description: Too Many Requests or Quota Exceeded
       headers:
         x-correlator:
           $ref: "../common/CAMARA_common.yaml#/components/headers/x-correlator"
