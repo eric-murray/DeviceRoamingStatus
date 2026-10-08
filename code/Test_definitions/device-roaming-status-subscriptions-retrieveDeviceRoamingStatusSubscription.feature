@@ -73,19 +73,17 @@ Feature: Device Roaming Status Subscriptions API, vwip - Operation retrieveDevic
     And the response body property "$.sinkCredential.credentialType" is set to value "PRIVATE_JWT_KEY"
     And the response body property "$.sinkCredential.jwksUri" is set to a valid value
 
-################
-# Error scenarios for management of input parameter device
-##################
-
 ##################
 # Error code 400
 ##################
+
+# No test scenarios yet defined
 
 ##################
 # Error code 401
 ##################
 
-  @roaming_status_subscriptions_retrieve_401.1_no_authorization_header
+  @roaming_status_subscriptions_retrieve_401.01_no_authorization_header
   Scenario: No Authorization header
     Given the request header "Authorization" is removed
     When the request "retrieveDeviceRoamingStatusSubscription" is sent
@@ -95,7 +93,7 @@ Feature: Device Roaming Status Subscriptions API, vwip - Operation retrieveDevic
     And the response property "$.code" is "UNAUTHENTICATED"
     And the response property "$.message" contains a user friendly text
 
-  @roaming_status_subscriptions_retrieve_401.2_expired_access_token
+  @roaming_status_subscriptions_retrieve_401.02_expired_access_token
   Scenario: Expired access token
     Given the header "Authorization" is set to a previously valid but now expired access token
     When the request "retrieveDeviceRoamingStatusSubscription" is sent
@@ -105,7 +103,7 @@ Feature: Device Roaming Status Subscriptions API, vwip - Operation retrieveDevic
     And the response property "$.code" is "UNAUTHENTICATED"
     And the response property "$.message" contains a user friendly text
 
-  @roaming_status_subscriptions_retrieve_401.3_malformed_access_token
+  @roaming_status_subscriptions_retrieve_401.03_malformed_access_token
   Scenario: Malformed access token
     Given the header "Authorization" is set to a malformed token
     When the request "retrieveDeviceRoamingStatusSubscription" is sent
@@ -118,6 +116,8 @@ Feature: Device Roaming Status Subscriptions API, vwip - Operation retrieveDevic
 ##################
 # Error code 403
 ##################
+
+# No test scenarios yet defined
 
 ##################
 # Error code 404
@@ -132,7 +132,3 @@ Feature: Device Roaming Status Subscriptions API, vwip - Operation retrieveDevic
     And the response property "$.status" is 404
     And the response property "$.code" is "NOT_FOUND"
     And the response property "$.message" contains a user friendly text
-
-##################
-# Error code 422
-##################
