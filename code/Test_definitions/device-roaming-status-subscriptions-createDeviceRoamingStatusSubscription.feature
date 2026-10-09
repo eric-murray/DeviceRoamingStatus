@@ -182,7 +182,7 @@ Feature: Device Roaming Status Subscriptions API, vwip - Operation createDeviceR
     And an event notification of the subscribed type is received on callback-url
     And notification body complies with the OAS schema at "#/components/schemas/CloudEvent"
 
-  @roaming_status_subscriptions_10_Create_roaming_status_subscription_sync_with_accesstoken_sink_credential
+  @roaming_status_subscriptions_10_create_roaming_status_subscription_sync_with_accesstoken_sink_credential
   Scenario: Create roaming status subscription (sync creation) with ACCESSTOKEN sinkCredential
   # Some implementations may only support asynchronous subscription creation
   # Some implementations may decide to not return the sinkCredential in the response (data minimization principle)
@@ -200,7 +200,7 @@ Feature: Device Roaming Status Subscriptions API, vwip - Operation createDeviceR
     And the response body property "$.sinkCredential.credentialType", if present, is set to value "ACCESSTOKEN"
     And the response body property "$.sinkCredential.accessTokenExpiresUtc", if present, is set to the same value of the request property "$.sinkCredential.accessTokenExpiresUtc"
 
-  @roaming_status_subscriptions_11_Create_roaming_status_subscription_sync_with_private_jwt_key_sink_credential_out_of_band_provisioning
+  @roaming_status_subscriptions_11_create_roaming_status_subscription_sync_with_private_jwt_key_sink_credential_out_of_band_provisioning
   Scenario: Create roaming status subscription (sync creation) with PRIVATE_JWT_KEY sinkCredential, out-of-band provisioning
   # Some implementations may only support asynchronous subscription creation
   # Some implementations may only support out_of_band provisioning
@@ -213,7 +213,7 @@ Feature: Device Roaming Status Subscriptions API, vwip - Operation createDeviceR
     And the response header "x-correlator" has the same value as the request header "x-correlator"
     And the response body complies with the OAS schema at "#/components/schemas/Subscription"
 
-  @roaming_status_subscriptions_12_Create_roaming_status_subscription_sync_with_private_jwt_key_sink_credential_in_band_provisioning
+  @roaming_status_subscriptions_12_create_roaming_status_subscription_sync_with_private_jwt_key_sink_credential_in_band_provisioning
   Scenario: Create roaming status subscription (sync creation) with PRIVATE_JWT_KEY sinkCredential, in-band provisioning
   # Some implementations may only support asynchronous subscription creation
   # Some implementations may additionally support in_band provisioning
