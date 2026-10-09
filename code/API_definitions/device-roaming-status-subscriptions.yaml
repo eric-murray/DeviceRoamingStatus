@@ -16,7 +16,7 @@ info:
     * **Device**:\
       A device refers to any physical entity that can connect to a network and participate in network communication.
 
-      At least one identifier for the device out of four options must be provided: IPv4 address, IPv6 address, Phone number, or Network Access Identifier assigned by the mobile network operator for the device. Where more than one device identifier is provided, only one identifier will be selected by the implementation and this choice indicated to the API consumer in the subscription creation response.
+      At least one identifier for the device out of four options must be provided: IPv4 address, IPv6 address, phone number, or network access identifier assigned by the mobile network operator for the device. Where more than one device identifier is provided, only one identifier will be selected by the implementation and this choice indicated to the API consumer in the subscription creation response.
 
       Note: Network Access Identifier is defined for future use and will not be supported with this version of the API.
 
@@ -45,7 +45,7 @@ info:
       - `org.camaraproject.device-roaming-status-subscriptions.v0.subscription-updated` is sent when the subscription is updated.
       - `org.camaraproject.device-roaming-status-subscriptions.v0.subscription-ended` is sent when the subscription ends.
 
-    It is used in following cases:
+    The `subscription-ended` event may be used in following cases:
       - the subscription expire time (optionally set by the API consumer) has been reached
       - the maximum number of subscription events (optionally set by the API consumer) has been reached
       - the subscription was deleted by the API consumer
