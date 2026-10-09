@@ -166,7 +166,7 @@ Feature: Device Roaming Status Subscriptions API, vwip - Operation createDeviceR
     Given a valid subscription for a device exists with "subscriptionId" equal to "id"
     And the subscription property "$.config.subscriptionMaxEvents" is set to 1
     And the subscription property "$.sink" is a valid callback URL
-    When a single notification corresponding to subscription property "$.type" has been sent to the callback URL
+    When a single notification corresponding to subscription property "$.types" has been sent to the callback URL
     Then a subscription termination event notification is sent to the callback URL
     And the notification body complies with the OAS schema at "#/components/schemas/EventSubscriptionEnded"
     And the notification property "$.type" is equal to "org.camaraproject.device-roaming-status-subscriptions.v0.subscription-ended"
